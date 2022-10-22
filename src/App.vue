@@ -1,28 +1,40 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app" style="padding:40px">
+    <div style="height: 500px; width: 800px; border: 4px solid red; position: relative; border-radius: 5px;">
+    <VueDraggableResizable :w="200" :h="200" @dragging="onDrag" @resizing="onResize" :parent="true">
+      <p>Draggable And Resizable Component For Vue.js<br>
+      X: {{ x }} / Y: {{ y }} - Width: {{ width }} / Height: {{ height }}</p>
+    </VueDraggableResizable>
+  </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
+import VueDraggableResizable from 'vue-draggable-resizable'
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  data: function () {
+    return {
+      width: 0,
+      height: 0,
+      x: 0,
+      y: 0
+    }
+  },
+  components:{
+    VueDraggableResizable
+  },
+  methods: {
+    onResize: function (x, y, width, height) {
+      this.x = x
+      this.y = y
+      this.width = width
+      this.height = height
+    },
+    onDrag: function (x, y) {
+      this.x = x
+      this.y = y
+    }
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
